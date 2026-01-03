@@ -78,6 +78,40 @@ function register_taxonomy_helper($taxonomy, $singular_name, $plural_name, $slug
 add_action('init', function() {
     register_taxonomy_helper('item_name', 'نام کالا', 'نام کالاها', 'item_name');
     register_taxonomy_helper('project_item', 'آیتم پروژه', 'آیتم‌های پروژه', 'project_item');
+    register_taxonomy_helper('employee', 'نام کارمند', 'کارمندها', 'employee');
 });
 
+function zigurat_create_custom_tables() {
+    global $wpdb;
+    
+    $charset_collate = $wpdb->get_charset_collate();
+    
+    // ساختار کوئری برای ایجاد جدول
+    $table_name = 'zigurat_inventory'; // اضافه کردن پیشوند وردپرس به نام جدول
 
+    $sql_inventory = "CREATE TABLE $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        item_name varchar(255) NOT NULL,
+        item_category varchar(100) DEFAULT '' NOT NULL,
+        item_quantity int(11) DEFAULT 0 NOT NULL,
+        PRIMARY KEY  (id)
+    ) $charset_collate;";
+
+    $table_users = 'zigurat_users';
+    $sql_users = "CREATE TABLE $table_users (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        username varchar(60) NOT NULL,
+        password varchar(255) NOT NULL,
+        PRIMARY KEY  (id)
+    ) $charset_collate;";
+
+   
+    // فراخوانی فایل مورد نیاز برای اجرای تابع dbDelta
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    // اجرای دستورات ساخت جداول
+    dbDelta( $sql_inventory );
+    dbDelta( $sql_users );
+}
+
+// اجرای تابع دقیقاً زمانی که پوسته فعال می‌شود
+add_action( 'after_switch_theme', 'zigurat_create_custom_tables' );

@@ -9,7 +9,6 @@ function create_post($item_category,$item_name, $action, $quantity, $project='')
     
     // ایجاد پست جدید 
     $username = $_COOKIE['ziguser'];
-
     // تبدیل تاریخ میلادی به شمسی و تنظیم زمان به وقت ایران 
     $miladi_date = new DateTime('now', new DateTimeZone('UTC')); 
     $miladi_date->setTimezone(new DateTimeZone('Asia/Tehran')); 
@@ -31,9 +30,11 @@ function create_post($item_category,$item_name, $action, $quantity, $project='')
         wp_set_post_terms($post_id, array($term_cat->term_id,$term_name->term_id), 'item_name');
 
         $term_action = get_term_by('name', $action, 'category');
-        $term_user = get_term_by('name', ucfirst($username), 'category');
+        wp_set_post_terms($post_id, array($term_action->term_id), 'category');
 
-        wp_set_post_terms($post_id, array($term_action->term_id,$term_user->term_id), 'category');
+        $term_user = get_term_by('name', ucfirst($username), 'employee');
+        
+        wp_set_post_terms($post_id, array($term_user->term_id), 'employee');
 
         if($project){
             $term_project = get_term_by('name', ucfirst($project), 'project_item');

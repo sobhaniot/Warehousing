@@ -112,61 +112,53 @@ $query = new WP_Query($args);
                 </tr>
             </thead>
             <tbody>
-                <?php
-                if ($query->have_posts()) { ?>
-                 <?php while ($query->have_posts()) {
-                     $query->the_post(); ?>
-                 <!-- foreach ($transactions as $post) : setup_postdata($post); ?> -->
-                    <?php
+                <?php if ($query->have_posts()) : ?>
+                    <?php while ($query->have_posts()) : $query->the_post(); 
                         $categories = get_the_terms(get_the_ID(), 'category');
-                        // echo '<pre>';
-                        // var_dump($categories);
-                        // echo '</pre>';
-
+                        $employee = get_the_terms(get_the_ID(), 'employee');
                         $project_item = get_the_terms(get_the_ID(), 'project_item');
-                        // echo '<pre>';
-                        // var_dump($project_item);
-                        // echo '</pre>';
-                        
                         $item_name = get_the_terms(get_the_ID(), 'item_name');
-//                         echo '<pre>';
-//                         var_dump($item_name[1]->parent);
-//                         echo '</pre>';
                         
-                    ?>
-                    <tr>
-                        <td><?php echo the_title(); ?></td>
-                        <td><?php echo $categories[1]->name; ?></td>
-                        <td><?php echo $categories[0]->name; ?></td>
-						
-						<?php 
-                        if ($item_name[0]->parent == 0){
-                            ?>
-                            <td><?php echo $item_name[1]->name; ?></td>
-                            <td><?php echo $item_name[0]->name; ?></td>
-                            <?php
-                        }else{
-                            ?>
-                            <td><?php echo $item_name[0]->name; ?></td>
-                            <td><?php echo $item_name[1]->name; ?></td>
-                            <?php
-                        }
+                        // جلوگیری از خطا با چک کردن وجود آرایه
+                        $cat_user = (isset($employee[0])) ? $employee[0]->name : 'نامشخص';
+                        $cat_type = (isset($categories[0])) ? $categories[0]->name : 'نامشخص';
                         ?>
-						
-                        <td><?php 
-                        if ($project_item && !is_wp_error($project_item)){
-                            echo $project_item[0]->name;
-                        }else{
-                            echo "";
-                        }
-                            ?></td>
-                        <td><?php echo the_excerpt(); ?></td>
+                        <tr>
+                            <td><?php the_title(); ?></td>
+                            <td><?php echo esc_html($cat_user); ?></td>
+                            <td><?php echo esc_html($cat_type); ?></td>
+                            
+                            <?php 
+                            if (!empty($item_name) && !is_wp_error($item_name)) {
+                                if (isset($item_name[0]) && $item_name[0]->parent == 0) { ?>
+                                    <td><?php echo isset($item_name[1]) ? esc_html($item_name[1]->name) : '---'; ?></td>
+                                    <td><?php echo esc_html($item_name[0]->name); ?></td>
+                                <?php } else { ?>
+                                    <td><?php echo isset($item_name[0]) ? esc_html($item_name[0]->name) : '---'; ?></td>
+                                    <td><?php echo isset($item_name[1]) ? esc_html($item_name[1]->name) : '---'; ?></td>
+                                <?php }
+                            } else { ?>
+                                <td>---</td>
+                                <td>---</td>
+                            <?php } ?>
+                            
+                            <td>
+                                <?php 
+                                if ($project_item && !is_wp_error($project_item)) {
+                                    echo esc_html($project_item[0]->name);
+                                } else {
+                                    echo "---";
+                                }
+                                ?>
+                            </td>
+                            <td><?php the_excerpt(); ?></td>
+                        </tr>
+                    <?php endwhile; wp_reset_postdata(); ?>
+                <?php else : ?>
+                    <tr>
+                        <td colspan="7" style="text-align:center;">هیچ تراکنشی موجود نیست.</td>
                     </tr>
-                <?php }
-                 wp_reset_postdata(); ?>
-                 <?php }else { ?>
-                    <p>هیچ تراکنشی موجود نیست.</p>
-                <?php } ?>
+                <?php endif; ?>
             </tbody>
         </table>
         <div class="pagination">
