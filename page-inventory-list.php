@@ -22,9 +22,18 @@ function get_inventory_list($only_available = false) {
     $table_name = 'zigurat_inventory';
 
     if ($only_available) {
-        $query = "SELECT * FROM $table_name WHERE item_quantity > 0";
+        $query = "
+            SELECT *
+            FROM $table_name
+            WHERE item_quantity > 0
+            ORDER BY item_category ASC, item_name ASC
+        ";
     } else {
-        $query = "SELECT * FROM $table_name";
+        $query = "
+            SELECT *
+            FROM $table_name
+            ORDER BY item_category ASC, item_name ASC
+        ";
     }
 
     return $wpdb->get_results($query);

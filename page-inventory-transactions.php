@@ -77,10 +77,7 @@ $query = new WP_Query($args);
         🖨 چاپ
     </button>
 
-    <button id="save-pdf-button" class="toolbar-btn">
-        📄 ذخیره PDF
-    </button>
-
+    
     <form method="get" class="filter-form">
 
         <select name="project" id="project">
@@ -204,25 +201,6 @@ $(document).ready(function() {
         $('#print-button').on('click', function() {
             window.print();
         });
-
-        
-    document.getElementById('save-pdf-button').addEventListener('click', function () {
-        var element = document.querySelector('.transactions-list-container');
-		var currentPage = <?php echo get_query_var('paged') ? get_query_var('paged') : 1; ?>;
-    	var filename = 'transactions_page_' + currentPage + '.pdf';
-
-        html2pdf(element, {
-            margin: 0,
-            filename: filename,
-            image: { type: 'jpeg', quality: 1 },
-            html2canvas: {
-                scale: 2, 
-                useCORS: true, 
-                width: element.scrollWidth
-            }, //,width:1080,height:1080
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } // landscape
-        });
-    });
     });
 </script>
 

@@ -470,3 +470,93 @@ body {
     background:#1976d2;
     border-color:#1976d2;
 }
+
+
+@media print{
+
+    body{
+        background:#fff !important;
+    }
+
+    /* حذف موارد اضافی */
+
+    header,
+    footer,
+    .back-to-home,
+    .pagination,
+    .toolbar{
+        display:none !important;
+    }
+
+    /* فقط گزارش */
+
+    .transactions-list-container{
+
+        width:100% !important;
+
+        margin:0 !important;
+
+        padding:0 !important;
+
+        box-shadow:none !important;
+
+        border:none !important;
+    }
+
+    h2{
+
+        text-align:center;
+
+        margin-bottom:25px;
+    }
+
+    table{
+
+        width:100% !important;
+
+        border-collapse:collapse;
+
+        font-size:13px;
+    }
+
+    table th,
+    table td{
+
+        border:1px solid #000;
+
+        padding:8px;
+
+        text-align:center;
+    }
+
+}
+
+@media print{
+
+table{
+
+    page-break-inside:auto;
+
+}
+
+tr{
+
+    page-break-inside:avoid;
+
+    page-break-after:auto;
+
+}
+
+thead{
+
+    display:table-header-group;
+
+}
+
+tfoot{
+
+    display:table-footer-group;
+
+}
+
+}
