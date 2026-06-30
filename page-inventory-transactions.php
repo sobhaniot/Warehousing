@@ -71,13 +71,20 @@ $query = new WP_Query($args);
 
 <div class="transactions-list-container">
     <h2>ورود و خروج کالاها</h2>
-    <button id="print-button">چاپ</button> 
-    <button id="save-pdf-button">ذخیره به صورت PDF</button>
+    <div class="toolbar">
+
+    <button id="print-button" class="toolbar-btn">
+        🖨 چاپ
+    </button>
+
+    <button id="save-pdf-button" class="toolbar-btn">
+        📄 ذخیره PDF
+    </button>
 
     <form method="get" class="filter-form">
-        <label for="project">فیلتر بر اساس پروژه:</label>
+
         <select name="project" id="project">
-            <option value="">همه پروژه‌ها</option>
+            <option value="">📁 همه پروژه‌ها</option>
             <?php foreach ($projects as $project) : ?>
                 <option value="<?php echo esc_attr($project->slug); ?>" <?php selected($current_project, $project->slug); ?>>
                     <?php echo esc_html($project->name); ?>
@@ -85,9 +92,8 @@ $query = new WP_Query($args);
             <?php endforeach; ?>
         </select>
 
-        <label for="item">فیلتر بر اساس کالا:</label>
         <select name="item" id="item">
-            <option value="">همه کالاها</option>
+            <option value="">📦 همه کالاها</option>
             <?php foreach ($items as $item) : ?>
                 <option value="<?php echo esc_attr($item->slug); ?>" <?php selected($current_item, $item->slug); ?>>
                     <?php echo esc_html($item->name); ?>
@@ -95,8 +101,13 @@ $query = new WP_Query($args);
             <?php endforeach; ?>
         </select>
 
-        <button type="submit">اعمال فیلتر</button>
+        <button type="submit" class="toolbar-btn primary">
+            🔍 اعمال فیلتر
+        </button>
+
     </form>
+
+    </div>
 
 
         <table class="transactions-table">

@@ -11,23 +11,45 @@ if (!check_login_cookies()) {
 
 get_header();
 
+$only_available = isset($_GET['available']) && $_GET['available'] == '1';
+
+// دریافت اطلاعات انبار
+$inventory_items = get_inventory_list($only_available);
+
 // تابع برای دریافت اطلاعات انبار
-function get_inventory_list() {
+function get_inventory_list($only_available = false) {
     global $wpdb;
     $table_name = 'zigurat_inventory';
 
-    // بازیابی اطلاعات انبار از دیتابیس
-    $inventory_items = $wpdb->get_results("SELECT * FROM $table_name");
+    if ($only_available) {
+        $query = "SELECT * FROM $table_name WHERE item_quantity > 0";
+    } else {
+        $query = "SELECT * FROM $table_name";
+    }
 
-    return $inventory_items;
+    return $wpdb->get_results($query);
 }
 
 // دریافت اطلاعات انبار
-$inventory_items = get_inventory_list();
 ?>
 
 <div class="inventory-list-container">
     <h2>لیست انبار</h2>
+    <div style="margin-bottom:20px;">
+    <div class="inventory-filter">
+        <?php if($only_available): ?>
+            <a href="<?php echo esc_url(remove_query_arg('available')); ?>" class="inventory-filter-btn active">
+                <span class="icon">📦</span>
+                نمایش همه کالاها
+            </a>
+        <?php else: ?>
+            <a href="<?php echo esc_url(add_query_arg('available', '1')); ?>" class="inventory-filter-btn">
+                <span class="icon">🔍</span>
+                فقط کالاهای موجود
+            </a>
+        <?php endif; ?>
+    </div>
+    </div>
     <?php if (!empty($inventory_items)) : ?>
         <table class="inventory-table">
             <thead>

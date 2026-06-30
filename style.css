@@ -353,3 +353,120 @@ body {
     max-height: 150px;
     overflow-y: auto;
 }
+
+.inventory-filter{
+    margin:20px 0 25px;
+}
+
+.inventory-filter-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 22px;
+    background:#fff;
+    color:#1565c0;
+    border:2px solid #2196f3;
+    border-radius:12px;
+    text-decoration:none;
+    font-size:16px;
+    font-weight:600;
+    transition:all .25s ease;
+    box-shadow:0 3px 10px rgba(33,150,243,.12);
+}
+
+.inventory-filter-btn:hover{
+    background:#2196f3;
+    color:#fff;
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(33,150,243,.28);
+}
+
+.inventory-filter-btn .icon{
+    font-size:20px;
+    line-height:1;
+}
+
+.inventory-filter-btn.active{
+    background:#2196f3;
+    color:#fff;
+    border-color:#2196f3;
+}
+
+.inventory-filter-btn.active:hover{
+    background:#1976d2;
+    border-color:#1976d2;
+}
+
+.toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin:25px 0;
+}
+
+.filter-form{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+/* Select */
+
+.filter-form select{
+    min-width:220px;
+    height:48px;
+    padding:0 16px;
+    border:2px solid #2196f3;
+    border-radius:12px;
+    background:#fff;
+    color:#333;
+    font-size:15px;
+    outline:none;
+    transition:.25s;
+    box-shadow:0 3px 10px rgba(33,150,243,.10);
+}
+
+.filter-form select:hover{
+    border-color:#1976d2;
+}
+
+.filter-form select:focus{
+    border-color:#1565c0;
+    box-shadow:0 0 0 4px rgba(33,150,243,.15);
+}
+
+/* Buttons */
+
+.toolbar-btn{
+    height:48px;
+    padding:0 22px;
+    border:2px solid #2196f3;
+    border-radius:12px;
+    background:#fff;
+    color:#1565c0;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:0 3px 10px rgba(33,150,243,.12);
+}
+
+.toolbar-btn:hover{
+    background:#2196f3;
+    color:#fff;
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(33,150,243,.25);
+}
+
+.toolbar-btn.primary{
+    background:#2196f3;
+    color:#fff;
+}
+
+.toolbar-btn.primary:hover{
+    background:#1976d2;
+    border-color:#1976d2;
+}
